@@ -1,0 +1,1 @@
+{"received_utc": "2026-11-03T01:21:07.387719+00:00", "run_id": "6ad22b889efb41119ec7a7f0856189fc", "operator": "S.L", "sample": "nominal pH 7", "kind": "RUN_START", "payload": {"port": "COM8", "bench_only": true}}
