@@ -26,11 +26,10 @@ The system uses a Raspberry Pi Pico 2 W, a pH sensor, an LED ring, a physical st
 | Folder | Contents |
 |---|---|
 | `firmware/` | Raspberry Pi Pico firmware and calibration scripts |
-| `laptop/` | Browser monitor, Windows launcher, and alternative monitoring script |
-| `database/` | SQLite database |
+| `software/` | Browser monitor, Windows launcher, and alternative monitoring script |
+| `database/` | Bench-run JSONL files and SQLite snapshots |
 | `hardware/` | Prototype photographs and wiring diagrams |
-| `tests/` | Software verification scripts |
-| `verification/` | Raw logs, calibration evidence, and verification records |
+| `verification/` | Software tests, archived evidence, and verification records |
 | `docs/` | Final project report |
 
 ## System Operation
@@ -52,7 +51,7 @@ The final report describes the completed tests, observed results, and remaining 
 
 ## Documentation
 
-See the `docs/` folder for the final EXSU 620 project report.
+See the [documentation index](docs/README.md) for the final report and its companion documents. Start the Windows browser monitor with [software/start_browser_monitor.cmd](software/start_browser_monitor.cmd).
 
 ## Team
 

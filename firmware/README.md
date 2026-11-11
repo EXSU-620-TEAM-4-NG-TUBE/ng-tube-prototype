@@ -1,10 +1,7 @@
-# Firmware
+# Firmware and calibration
 
-This folder contains the MicroPython firmware for the Raspberry Pi Pico 2 W used in our EXSU 620 NG tube pH verification prototype.
+- [main.py](main.py) is the current Pico 2 W MicroPython firmware. Copy it to the Pico as `main.py`.
+- [calibrate_bench_weekly.py](calibrate_bench_weekly.py) is the current bench calibration script.
+- [monitor_browser.py](monitor_browser.py) is a Windows Python entry point to the browser service in [software/browser_monitor](../software/browser_monitor/). Run it on the laptop with the browser service dependencies installed.
 
-It will include:
-- `main.py` — Final code for reading the pH sensor and controlling the prototype.
-- Calibration script — Code used to calibrate the pH sensor with reference buffer solutions.
-- Documentation of the MicroPython version and hardware pin connections.
-
-**Note:** This prototype is intended for educational, bench-top testing only and is not approved for clinical use.
+Educational bench prototype for EXSU 620.

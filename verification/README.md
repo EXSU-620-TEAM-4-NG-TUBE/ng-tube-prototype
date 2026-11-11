@@ -13,3 +13,5 @@ It will include:
 Verification records will distinguish completed tests, failed tests, and tests requiring further evaluation.
 
 **Note:** This prototype is intended for educational, bench-top testing only and is not approved for clinical use.
+
+Run the [software verification tests](tests/README.md) from this repository. The [database archive](../database/README.md) contains saved project bench logs and SQLite snapshots.
