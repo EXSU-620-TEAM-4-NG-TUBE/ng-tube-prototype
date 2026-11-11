@@ -1,0 +1,54 @@
+[
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\button_stop_update\\main.py",
+    "sha256": "8ad04f583f005fbc22ca2ccd9899643e0fa6ac5a2e8f02227136c2f85b8bd274"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\calibrate_bench_weekly.py",
+    "sha256": "04f9a4c456458b8da06ec14ea6cfb3d42c003a0fd7133e6b6169d216f16eceb7"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\start_browser_monitor.cmd",
+    "sha256": "0a031e1e65b4e983d8b0a7dfd83ba9301f05509f7d1f75dbb846990bc8686f25"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\dashboard.js",
+    "sha256": "198c51765579d6ff57973f82b4f0fce080059aeda74fa0805dc43c723b5a89b1"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\glacier.css",
+    "sha256": "a49cbd496a2052131aa0847bb0bf1c111685fb27b53c3e95ae75496bbcd34d16"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\index.html",
+    "sha256": "cd034b08fa5c65bf3749f7c41208cdcc09333f8de0cd570d010575ffbf5addbb"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\monitor_rules.py",
+    "sha256": "785808a8d9dbdc3f5b32a7adae693c563e24a3325e63f1bf2537d5d723a50c2e"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\phone_notifications.py",
+    "sha256": "7cad693d6382870763fc3b3a035151488837a8f385011055bbbfb131a9992afc"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\requirements.txt",
+    "sha256": "95fdad543f34e4a191cd17219e1a73b4ab4b0b5ad9806a25c3b49e7b48ab8ca0"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\service.py",
+    "sha256": "79640132258cab51e453cf917ada704624bd570e268ff016e6abab53d9ef9685"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\styles.before-glacier.css",
+    "sha256": "17806eaa8b7e90ae9fd957f7f35c8aa7bde641cb91212ebb6049eb5598bf2942"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\styles.css",
+    "sha256": "f180d9e512c8b2b8dc4f7105710f923e342c4c8f0f7c1dd27dbb599d00feb43b"
+  },
+  {
+    "path": "C:\\Users\\Gyeore\\.codex\\.chatgpt-projects\\g-p-6abd1e7e5a8c8191bec819bcbd0f3660\\browser_monitor\\test_service.py",
+    "sha256": "aff922006dc455c769f0bbe865f1dd89b0a8b5d6ca939b706a1b62f00a622fc1"
+  }
+]
