@@ -19,7 +19,7 @@ DRIFT_LIMIT_PH = 0.40
 STUCK_LIMIT_PH = 0.10
 STUCK_DURATION_MS = 15000
 ADC_MIN = 500
-ADC_MAX = 45000
+ADC_MAX = 60000
 WINDOW_N = 10
 MAX_SPREAD_PH = 0.35
 MIN_WAIT_MS = 0  # Track stability from the beginning.
@@ -182,6 +182,7 @@ sample_id = None
 sample_stopped = False
 terminal_reason = "SAMPLE_STOPPED"
 deadline_checked = False
+completed_reading = None
 stopped_elapsed = None
 last_measurement = None
 sample_started_ms = None
@@ -191,6 +192,7 @@ command_poll = select.poll()
 command_poll.register(sys.stdin, select.POLLIN)
 
 def start_sample(new_id, baseline=None, known_change=False):
+    global completed_reading
     global sample_id, sample_started_ms, window, stable_since
     global filter_values, filtered_ph, stuck_baseline, known_buffer_changed, stuck_info
     global first_three, last_three, reading_count, drift_info, capture, last_slot
@@ -208,6 +210,7 @@ def start_sample(new_id, baseline=None, known_change=False):
     # Duplicate delivery of the same request must not restart settling.
     duplicate = new_id == sample_id
     if not duplicate:
+        completed_reading = None
         filter_values = []
         filtered_ph = None
         stuck_baseline = baseline
@@ -342,7 +345,21 @@ try:
         now = ticks_ms()
         elapsed = ticks_diff(now, start)
         sample_elapsed = None if sample_started_ms is None else ticks_diff(now, sample_started_ms)
+        if completed_reading is not None and not sample_stopped:
+            # Completed sample, not a live measurement. Keep USB/button/commands active.
+            held = dict(completed_reading)
+            held['elapsed_ms'] = elapsed
+            held['calibration_remaining_ms'] = calibration_remaining()
+            held['calibration_currently_valid'] = calibration_remaining() > 0
+            print(json.dumps(held))
+            wait_with_button(1000)
+            continue
         if sample_stopped:
+            # Repeat OFF while manually stopped: NeoPixels retain their last
+            # colour if a single data transmission is missed.
+            if terminal_reason == "SAMPLE_STOPPED":
+                ring.fill(OFF)
+                ring.write()
             # Heartbeats preserve USB monitoring without taking new measurements.
             print(json.dumps({
                 "elapsed_ms": elapsed, "sample_id": sample_id,
@@ -354,7 +371,8 @@ try:
                 "calibration_valid": calibration_remaining() > 0,
                 "calibration_remaining_ms": calibration_remaining(),
                 "calibration_id": CAL_ID, "calibrated_at_unix": calibrated_at, "bench_only": True,
-                "input_source": "SENSOR", "firmware_version": "sample_response_v8"
+                "input_source": "SENSOR", "firmware_version": "sample_response_v10",
+                "ring_command": "OFF" if terminal_reason == "SAMPLE_STOPPED" else "TECHNICAL"
             }))
             wait_with_button(1000)
             continue
@@ -498,8 +516,11 @@ try:
             "reason": reason, "verdict": verdict, "elapsed_ms": elapsed,
             "sample_id": sample_id
         }
-        print(json.dumps({
+        reading_packet = {
             "sample_stopped": sample_stopped,
+            "sample_complete": deadline_checked,
+            "result_held": deadline_checked,
+            "calibration_valid_at_result": calibration_valid if deadline_checked else None,
             "test_mode": "PROBE_RESPONSE_CHECK" if known_buffer_changed else "ROUTINE_SAMPLE",
             "adc_min": ADC_MIN,
             "adc_max": ADC_MAX,
@@ -513,7 +534,7 @@ try:
             "sample_id": sample_id,
             "sample_elapsed_ms": sample_elapsed,
             "calibration_remaining_ms": calibration_remaining(),
-            "firmware_version": "sample_response_v8",
+            "firmware_version": "sample_response_v10",
             "spread_pH": None if spread is None else round(spread, 3),
             "raw": raw,
             "unfiltered_pH": None if ph is None else round(ph,3),
@@ -532,9 +553,13 @@ try:
             "calibration_operator": calibration_operator,
             "calibration_load_error": calibration_load_error,
             "restart_locked": reboot_locked,
-        }))
+        }
+        if evaluating and reason == "VALID":
+            completed_reading = dict(reading_packet)
+        print(json.dumps(reading_packet))
         
         wait_with_button(1000 if sample_id is None else 10)
 finally:
     ring.fill(OFF)
     ring.write()
+
