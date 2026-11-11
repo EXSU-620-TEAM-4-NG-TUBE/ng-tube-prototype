@@ -1,0 +1,31 @@
+{
+  "calibration_id": "bench-18f0c71b",
+  "raw4_recomputed": 34161.066666666666,
+  "raw7_recomputed": 38965.26666666667,
+  "stored_raw4": 34161.068,
+  "stored_raw7": 38965.264,
+  "T28_run_id": "f93b67133c1045aa9210c638fde8c07c",
+  "analysis_sample_elapsed_ms": [
+    90000,
+    120000
+  ],
+  "results": {
+    "T28_pH10.01": {
+      "n": 30,
+      "mean": 10.359666666666666,
+      "min": 10.28,
+      "max": 10.41,
+      "all_settled": true,
+      "all_calibration_valid": true
+    },
+    "T28_RETURN_PH7": {
+      "n": 30,
+      "mean": 7.020666666666667,
+      "min": 6.972,
+      "max": 7.112,
+      "all_settled": true,
+      "all_calibration_valid": true
+    }
+  },
+  "run_closed": true
+}
