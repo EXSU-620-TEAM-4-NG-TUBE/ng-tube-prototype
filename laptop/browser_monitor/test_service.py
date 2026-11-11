@@ -16,6 +16,12 @@ class Phone:
     pending=set()
     def drain(self):return []
     def submit(self,*a,**k):return None
+class RecordingPhone(Phone):
+    def __init__(self):self.calls=[];self.seen=set()
+    def submit(self,sample_id,state,result,ph,**kw):
+        if sample_id in self.seen:return None
+        self.seen.add(sample_id);self.calls.append((sample_id,state,result,ph,kw))
+        return dict(sample_id=sample_id,state=state,result=result,reason=kw.get('reason'))
 class Port:
     def __init__(self):self.writes=[]
     def write(self,b):self.writes.append(json.loads(b));return len(b)
@@ -110,5 +116,33 @@ class Tests(unittest.TestCase):
         self.assertEqual(len(self.e.deliveries['test-1']['confirmations']),1)
         self.assertEqual(first['confirmation_method'],'MANUAL_PHONE_OBSERVATION')
         self.assertEqual(self.e.db.execute("select count(*) from events where kind='PHONE_RECEIPT_CONFIRMED'").fetchone()[0],1)
+
+    def test_notifications_cover_every_completed_outcome(self):
+        phone=RecordingPhone();self.e.phone=phone
+        self.e.act('session',dict(operator='TEST',label='all outcomes',phone_consent=True))
+        self.e.port=Port();self.e.last_rx=time.monotonic()
+        cases=[('NORMAL','VALID','Normal/'),('ADVISORY','VALID','Advisory/'),
+               ('CRITICAL','VALID','Critical/'),('TECHNICAL','UNABLE_TO_SETTLE','Unable to settle'),
+               ('TECHNICAL','NOT_SETTLED','Unable to settle'),('TECHNICAL','DRIFT_FAILURE','Drifting'),
+               ('TECHNICAL','STUCK_FAILURE','Stuck'),('TECHNICAL','SIGNAL_OUT_OF_RANGE','out of range'),
+               ('TECHNICAL','CALIBRATION_INVALID','Calibration'),('TECHNICAL','MISSING_TIMED_READINGS','Missing'),
+               ('TECHNICAL','INVALID_VALUE','Invalid')]
+        for i,(state,reason,word) in enumerate(cases):
+            self.e.act('samples/new',{'label':reason})
+            self.reading(20000,state=state,reason=reason,elapsed_ms=i*30000+20000)
+            self.assertEqual(len(phone.calls),i)
+            self.reading(21000,state=state,reason=reason,elapsed_ms=i*30000+21000,settled=state!='TECHNICAL',verdict=None if state=='TECHNICAL' else 'TEST')
+            self.e.publish();self.e.publish()
+            self.assertEqual(len(phone.calls),i+1)
+            self.assertEqual(phone.calls[-1][1],state)
+            self.assertIn(word,phone.calls[-1][2])
+            self.assertEqual(phone.calls[-1][4]['reason'],reason)
+        self.e.act('samples/new',{'label':'stopped'})
+        self.reading(22000,elapsed_ms=400000,state='TECHNICAL',reason='SAMPLE_STOPPED',settled=False,verdict=None)
+        self.assertEqual(len(phone.calls),len(cases))
+        self.e.notifications_enabled=False
+        self.e.act('samples/new',{'label':'no consent'})
+        self.reading(21000,elapsed_ms=430000)
+        self.assertEqual(len(phone.calls),len(cases))
 
 if __name__=='__main__':unittest.main()

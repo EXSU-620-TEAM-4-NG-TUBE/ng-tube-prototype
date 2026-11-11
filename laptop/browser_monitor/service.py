@@ -20,7 +20,7 @@ from monitor_rules import Alarm, Audio, SampleGate, visible_result, countdown_te
 from phone_notifications import PhoneNotifications, TOPIC
 
 ROOT = Path(__file__).resolve().parent
-VERSION = 'browser_service_v1'
+VERSION = 'browser_service_v2_all_results'
 
 def utc():
     return datetime.now(timezone.utc).isoformat()
@@ -300,8 +300,8 @@ class Engine:
             self.audio.play(state);self.reminder=now+120
         if (self.notifications_enabled and current and (current.get('sample_elapsed_ms') or 0)>=21000
                 and state in ('NORMAL','ADVISORY','CRITICAL','TECHNICAL')
-                and current.get('reason') not in ('MEASURING','NOT_SETTLED','NO_SAMPLE','SAMPLE_STOPPED')):
-            event=self.phone.submit(self.samples.requested,state,text,ph)
+                  and current.get('reason') not in ('MEASURING','NO_SAMPLE','SAMPLE_STOPPED')):
+            event=self.phone.submit(self.samples.requested,state,text,ph,reason=current.get('reason'))
             if event:self.track_notification(event);self.notification_status='Sending result…'
         for kind,payload in self.phone.drain():
             self.save(kind,payload)

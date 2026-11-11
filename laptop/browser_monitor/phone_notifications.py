@@ -15,25 +15,43 @@ class PhoneNotifications:
         self.sent_samples = set()
         self.pending = set()
 
-    def submit(self, sample_id, state, result, ph, test=False):
+    def submit(self, sample_id, state, result, ph, test=False, reason=None):
         if not sample_id or sample_id in self.sent_samples:
             return None
         self.sent_samples.add(sample_id)
         stamp = datetime.now(timezone.utc).isoformat()
         data = {'sample_id': sample_id, 'topic': TOPIC, 'queued_utc': stamp,
-                'test_notification': test, 'state': state}
+                'test_notification': test, 'state': state, 'reason': reason,
+                'result': result, 'pH_display': ph}
         if len(self.pending) >= 16:
             self.events.put(('PHONE_NOTIFICATION_FAILED', dict(data,error='Notification queue full')))
             return data
         self.pending.add(sample_id)
         body = ('BENCH DEMONSTRATION — NOT FOR PATIENT CARE\n'
                 f'Sample ID: {sample_id}\nEstimated pH: {ph}\n'
-                f'Result: {result}\nResult queued UTC: {stamp}')
+                f'Result: {result}\nReason: {reason or state}\nResult queued UTC: {stamp}')
+        technical_titles = {
+            'NOT_SETTLED': 'Technical - not settled; REPEAT',
+            'UNABLE_TO_SETTLE': 'Technical - unable to settle pH; REPEAT',
+            'DRIFT_FAILURE': 'Technical - drifting; REPEAT',
+            'STUCK_FAILURE': 'Technical - stuck; REPEAT',
+            'SIGNAL_OUT_OF_RANGE': 'Technical - pH out of range; REPLUG cable',
+            'ADC_FAULT': 'Technical - ADC fault; REPLUG cable',
+            'CALIBRATION_INVALID': 'Technical - calibration unavailable or expired',
+            'MISSING_TIMED_READINGS': 'Technical - missing readings; REPEAT',
+            'INVALID_VALUE': 'Technical - invalid pH; REPEAT',
+        }
+        title = technical_titles.get(reason, 'Technical - see result') if state == 'TECHNICAL' else {
+            'NORMAL': 'Normal - sample result',
+            'ADVISORY': 'Advisory - escalate; REPEAT with new sample',
+            'CRITICAL': 'Critical - DO NOT FEED',
+        }.get(state, 'Sample result')
         def worker():
             try:
                 request = urllib.request.Request(ENDPOINT,data=body.encode('utf-8'),method='POST',
-                    headers={'Title':'EXSU620 - BENCH TEST' if test else 'EXSU620 - Bench sample result',
-                             'Priority':'4' if state in ('CRITICAL','TECHNICAL') else '3',
+                    headers={'Title':'EXSU620 - BENCH TEST' if test else 'EXSU620 - ' + title,
+                             # All completed outcomes are equally eligible for phone alerts.
+                             'Priority':'4',
                              'Content-Type':'text/plain; charset=utf-8'})
                 with self.opener(request,timeout=8) as response:
                     if response.status != 200:

@@ -1,5 +1,8 @@
 # EXSU620 browser bench monitor
 
+## Notification update 11 November 2026
+The service version `browser_service_v2_all_results` sends one notification for each completed normal, advisory, critical or technical sample result. Technical messages identify the reason (unsettled, drifting, stuck, signal out of range, calibration invalid, missing readings or invalid pH). A legacy NOT_SETTLED result at or after 21 seconds is also eligible. Measuring, ready and manually stopped states are not completed outcomes and do not send a result notification. Consent remains required. USB disconnection clears the active sample and does not send a phone notification. All completed-result messages use ntfy priority 4; this affects phone delivery priority, not the device's alarm category. Restart the service launcher after updating service.py and phone_notifications.py. Refreshing only the browser does not reload Python code.
+
 ## Consent and delivery evidence
 Under More info → Recipient consent & phone receipt, record each recipient's initials/nickname and explicit agreement before sending. The startup consent checkbox registers the operator as a recipient. Consent is session-specific and saved with a UTC timestamp in SQLite and JSONL. It does not control access to the public ntfy topic.
 
@@ -7,12 +10,12 @@ After sending, select the notification and recipient, inspect that phone for the
 
 Additional POST routes: /api/notifications/consent (recipient, agreed); /api/notifications/receipt (sample_id, recipient_id, observed, evidence_note).
 
-Windows local browser dashboard backed by a Python REST service, USB serial, SQLite and JSONL. No Tkinter is used. Pico firmware remains `button_stop_update/main.py` (sample_response_v8); this migration does not change measurement rules or calibration.
+Windows local browser dashboard backed by a Python REST service, USB serial, SQLite and JSONL. No Tkinter is used. Load `firmware/main.py` from the repository root onto the Pico as `main.py` (firmware `sample_response_v10`).
 
 ## Run
-1. Save the current firmware as main.py on the Pico. Close Thonny and the old desktop monitor so COM8 is available.
+1. Save the current firmware as main.py on the Pico. Close Thonny and any older monitor to free the Pico's serial port. The service defaults to COM7 and looks for the connected Pico.
 2. Connect the Pico. Double-click `../start_browser_monitor.cmd`.
-3. Keep the service window open. The browser opens http://127.0.0.1:8765 . Enter operator initials and session label.
+3. Keep the service window open. The browser opens http://127.0.0.1:8765 . Check that `http://127.0.0.1:8765/api/health` reports `browser_service_v2_all_results`. Enter operator initials and session label.
 4. Phone notifications are optional: tick consent only for your subscribed Android device. The ntfy topic EXSU620_TEAM4_NGTUBE is public; use no personal or patient information.
 5. Enter a sample label and select NEW SAMPLE. The device supplies the result at 21 seconds. The browser does not manufacture a result when the timer reaches zero.
 6. On-screen ACK silences audio for 120 seconds. The physical button stops the test through Pico firmware. NEW SAMPLE restarts measurement.
