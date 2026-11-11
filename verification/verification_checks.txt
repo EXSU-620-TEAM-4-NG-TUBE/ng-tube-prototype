@@ -1,0 +1,7 @@
+Report preparation 2026-11-10
+PASS check_firmware_loop.py: actual firmware loop, 21 s publication, stable/stuck/routine-similarity/signal/drift/unsettled; result held 60 s without ADC; new sample resumes; physical stop repeatedly OFF.
+PASS check_signal_limits.py: current inclusive ADC 500 to 60000 and pre-decision withholding.
+PASS check_weekly.py: seven-day boundary, restart age, missing clock, future timestamp and invalid record.
+PASS check_fixed21.py: timing, six prescribed readings, threshold equality/directions, missing/late readings, settling and calibration. Its injected ADC maximum is historical; current signal limits are covered separately.
+PASS browser_monitor/test_service.py: all 5 tests. Initial root-directory invocation could not import test_service; corrected working directory. Restricted local HTTP connection failed with WinError 10013; permitted rerun passed. One non-fatal ResourceWarning during HTTP test.
+These are software checks using virtual inputs and local test storage, not physical validation.
