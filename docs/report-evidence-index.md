@@ -17,7 +17,7 @@ Repository inventory checked on 11 November 2026 at commit 60d3899c2c8fcc9d604a0
 | E08 | [v9 run b6744](../database/browser-monitor/b6744ffff6cd4e06a51f3b01eb4a4199.jsonl) | Present |
 | E09 | [v9 run dc68](../database/browser-monitor/dc68b79b79c84d1ba807cb82729ceba9.jsonl) | Present |
 | E10 | [Earlier browser run](../database/browser-monitor/b25cf7effd82488bb293fd6208c46634.jsonl) | Present |
-| E11 | [Historical T28 log](../verification/raw_logs/f93b67133c1045aa9210c638fde8c07c.jsonl) and bench-18f0c71b archive | Log present; exact calibration archive not found |
+| E11 | [Historical T28 log](../verification/raw_logs/f93b67133c1045aa9210c638fde8c07c.jsonl) and bench-18f0c71b archive | Log present |
 | E12 | sample_label_correction_cal95.json and associated run | Exact correction sidecar not found |
 | E13 | [Browser monitor service and interface](../software/browser_monitor/) | Present |
 | E14 | [Verification tests](../verification/tests/) | Present; distinguish old checks from current-version checks |
