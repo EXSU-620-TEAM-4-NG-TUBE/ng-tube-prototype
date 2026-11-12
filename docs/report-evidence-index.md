@@ -2,7 +2,7 @@
 
 Evidence IDs (E01–E23) are cross-references assigned in the Team 4 report, not external publication numbers. C1 identifies course materials. A citation such as E08 lines 113–114 means those numbered lines in the original newline-delimited JSON log, not report pages.
 
-Repository inventory checked on 11 November 2026 at commit 60d3899c2c8fcc9d604a0ff9520c0b598399628b. Presence does not independently verify every statement about file contents.
+This index accompanies the [final report](EXSU620_Team4_Final_Report.pdf). Links point to the available repository evidence.
 
 | ID | Source or repository location | Availability |
 |---|---|---|
@@ -25,10 +25,10 @@ Repository inventory checked on 11 November 2026 at commit 60d3899c2c8fcc9d604a0
 | E16 | [Official Pico 2 W datasheet](https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf) | External manufacturer reference |
 | E17 | [Assembly photo](../hardware/assembly_overview.png) and [close-up](../hardware/pico_shield_closeup.png) | Present; earlier assembly photos |
 | E18 | ER1_User_Supplied_Comparisons.json | Selected-field transcription not found; underlying run [20fda](../database/browser-monitor/20fda0d966d2425ea3a0105a0911b8c1.jsonl) present |
-| E19 | Added video evidence of interface lights sound ACK.mp4 | Two original recordings available in database folder  |
+| E19 | Added video evidence of interface lights sound ACK.mp4 | Two recordings in [verification media](../verification/media/). Exact mapping unverified.  |
 | E20 | Retrospective stop/history index | Exact derived index not found; underlying logs present |
-| E21 | evidence for ack turning off the alarm.mp4 | Two original recordings available in database folder |
-| E22 | evidence for connection lost.jpeg | Original image available in database folder |
+| E21 | evidence for ack turning off the alarm.mp4 | Two recordings in [verification media](../verification/media/). Exact mapping unverified. |
+| E22 | evidence for connection lost.jpeg | Original connection-loss image not found in the repository. |
 | E23 | [Notification module](../software/browser_monitor/phone_notifications.py), [service](../software/browser_monitor/service.py), [message tests](../verification/tests/test_notification_messages.py), [service tests](../verification/tests/test_service.py) | Present |
 
 ## Demonstration evidence
@@ -36,6 +36,8 @@ The report describes green/normal indication, red/critical indication with a ten
 
 - [WhatsApp Video 2026-11-10 at 7.16.42 PM.mp4](../verification/media/WhatsApp%20Video%202026-11-10%20at%207.16.42%20PM.mp4)
 - [WhatsApp Video 2026-11-10 at 7.30.54 PM.mp4](../verification/media/WhatsApp%20Video%202026-11-10%20at%207.30.54%20PM.mp4)
+
+- [Phone notification screenshot](../verification/media/phone%20noti%20evidence.jpeg) shows Normal and Critical messages and a cropped Advisory heading. [Matched browser run](../database/browser-monitor/53b0b58db2954b3d9798f687524425a6.jsonl) records the Normal and Critical sample IDs. [Provider acceptance log](../database/browser-monitor/b49c6df50c904f718fe0dece99653eb5.jsonl) records all four categories.
 
 ## Updated team hardware notes
 The team reports a PLA enclosure printed at 15% infill with splash guards around openings; ingress resistance and mechanical strength are not quantified. The Pico 2 W connects through a Seeed Studio Grove Shield. Laptop audio replaces the PAM8302A path after a reported short circuit during soldering. The team reports resolving unstable readings by replacing the Pico and attributes the problem to its cable connection point; the precise contact defect was not independently isolated.
