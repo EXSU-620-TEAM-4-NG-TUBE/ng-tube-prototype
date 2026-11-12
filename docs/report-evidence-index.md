@@ -21,14 +21,14 @@ Repository inventory checked on 11 November 2026 at commit 60d3899c2c8fcc9d604a0
 | E12 | sample_label_correction_cal95.json and associated run | Exact correction sidecar not found |
 | E13 | [Browser monitor service and interface](../software/browser_monitor/) | Present |
 | E14 | [Verification tests](../verification/tests/) | Present; distinguish old checks from current-version checks |
-| E15 | [Trial index](../verification/trial_index.csv), [source manifest](../verification/source_manifest.json), [calibration audit](../verification/calibration_audit.json) | Present; full revised reconciliation companion not found |
+| E15 | [Trial index](../verification/trial_index.csv), [source manifest](../verification/source_manifest.json), [calibration audit](../verification/calibration_audit.json) | Present |
 | E16 | [Official Pico 2 W datasheet](https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf) | External manufacturer reference |
 | E17 | [Assembly photo](../hardware/assembly_overview.png) and [close-up](../hardware/pico_shield_closeup.png) | Present; earlier assembly photos |
-| E18 | ER1_User_Supplied_Comparisons.json | Selected-field transcription not found; underlying run [20fda](../database/browser-monitor/20fda0d966d2425ea3a0105a0911b8c1.jsonl) now present but not reanalysed in this editorial update |
-| E19 | Added video evidence of interface lights sound ACK.mp4 | Two original recordings available below. Exact clip mapping unverified. |
+| E18 | ER1_User_Supplied_Comparisons.json | Selected-field transcription not found; underlying run [20fda](../database/browser-monitor/20fda0d966d2425ea3a0105a0911b8c1.jsonl) present |
+| E19 | Added video evidence of interface lights sound ACK.mp4 | Two original recordings available in database folder  |
 | E20 | Retrospective stop/history index | Exact derived index not found; underlying logs present |
-| E21 | evidence for ack turning off the alarm.mp4 | Two original recordings available below. Exact clip mapping unverified. |
-| E22 | evidence for connection lost.jpeg | Original image not found; report contains reproduced evidence view |
+| E21 | evidence for ack turning off the alarm.mp4 | Two original recordings available in database folder |
+| E22 | evidence for connection lost.jpeg | Original image available in database folder |
 | E23 | [Notification module](../software/browser_monitor/phone_notifications.py), [service](../software/browser_monitor/service.py), [message tests](../verification/tests/test_notification_messages.py), [service tests](../verification/tests/test_service.py) | Present |
 
 ## Demonstration evidence
